@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import Sidebar from "./_components/Sidebar";
+import Loading from "./loading";
 
 export default function Layout({children}){
     return(<div className="flex">
@@ -6,8 +8,9 @@ export default function Layout({children}){
             <Sidebar/>
         </div>
         <div className="w-4/5 pr-5">
-            {children}
+            <Suspense fallback={<Loading/>}>
+                {children}
+            </Suspense>
         </div>
-
     </div>)
 }

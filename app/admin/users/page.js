@@ -3,8 +3,9 @@
 import Button from "../_components/Button";
 import UserCard from "../_components/UserCard";
 import Dialog from "../_components/Dialog";
-import { useEffect, useState } from "react";
+import {  Suspense, useEffect, useState } from "react";
 import axios from "axios";
+import Loading from "../loading";
 
 export default function Users(){
 
@@ -25,6 +26,9 @@ export default function Users(){
     }
 
     async function getAllUsers(){
+        //Yüklenme işlemini izlemek için konuldu
+        //await new Promise((resolve) => setTimeout(resolve, 2000));
+
         if(searchUser.trim() === "" ){
             const {data} = await axios.get(`http://localhost:5000/api/data`)
             setAllUser(data)
@@ -35,7 +39,9 @@ export default function Users(){
         getAllUsers()
     },[allUser])
 
-    return(<div className="mt-10 ml-10 ">
+    return(
+        <div className="mt-10 ml-10 ">
+            
             {
                 dialogOpen && <Dialog viewControl={dialogOpen}/> 
             }
@@ -59,6 +65,6 @@ export default function Users(){
                  allUser.length !== 0 && allUser.map((user,index) => <UserCard key={index} user ={user}  />)
             }
         </div>
-
-    </div>)
+    </div>
+    )
 }

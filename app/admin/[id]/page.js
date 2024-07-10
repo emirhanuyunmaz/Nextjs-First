@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useParams } from "next/navigation"
 import { useEffect } from "react";
+import LoadingComp from "../_components/LoadingComp";
 
 export default function Page (){
     //ID ye göre kullanıcı çekme işlemleri.
@@ -19,6 +20,6 @@ export default function Page (){
 
     return (<div>
         <img src="" alt="" />
-        
+        {/* <LoadingComp/> */}
     </div> )
 }
