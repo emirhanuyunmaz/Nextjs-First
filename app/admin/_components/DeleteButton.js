@@ -10,7 +10,7 @@ export default function DeleteButton({id}){
         //console.log(res);
     }
 
-    return(<button onClick={deleteHandleClick} className="bg-red-500 px-2 py-1 rounded-xl text-sm">
+    return(<button onClick={deleteHandleClick} className="bg-red-500 px-2 h-8 py-1 rounded-xl text-sm">
         Delete
     </button>)
 }

@@ -19,11 +19,8 @@ export default function Users(){
     async function searchUserHandleClick(event){
         event.preventDefault()
         if(searchUser.trim() !== ""){
-            //console.log(searchUser);
             const {data} = await axios(`http://localhost:5000/api/data/${searchUser}`)
-            console.log(data.length);
             setAllUser(data);
-            console.log(allUser);
         }
     }
 
@@ -38,7 +35,7 @@ export default function Users(){
         getAllUsers()
     },[allUser])
 
-    return(<div className="mt-10 ml-10  ">
+    return(<div className="mt-10 ml-10 ">
             {
                 dialogOpen && <Dialog viewControl={dialogOpen}/> 
             }
@@ -59,7 +56,7 @@ export default function Users(){
             <p className="text-slate-400 text-sm" >Password</p>
         </div>
             {
-                allUser.length !== 0 && allUser.map((user,index) => <UserCard key={index} user ={user}  />)
+                 allUser.length !== 0 && allUser.map((user,index) => <UserCard key={index} user ={user}  />)
             }
         </div>
 

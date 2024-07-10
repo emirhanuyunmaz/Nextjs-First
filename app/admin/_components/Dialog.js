@@ -1,12 +1,37 @@
 "use client";
 import axios from "axios";
-import { useState } from "react"
+import { useEffect, useState } from "react"
+
 
 export default function Dialog({viewControl}){
+  //Kullanıcı Ekleme işlemi yapılcağı alan...
     const [view,setView] = useState(viewControl)
     const [userName,setUserName] = useState("")
     const [userEmail,setUserEmail] = useState("")
     const [userPassword,setUserPassword] = useState("")
+    const [userImage , setUserImage] = useState()
+
+    //Her resim eklendiğinde resmi güncellemek için kullanılıyor.
+    useEffect(() => {
+      uploadImages()
+    },[userImage] )
+
+    function uploadImages(){
+      //console.log(userImage);
+      //Burada yapılan işlem sayesinde resmin img etiketine eklenmesi yapılmaktadır.
+      if (userImage && userImage.files && userImage.files[0]) {
+        let reader = new FileReader();
+        reader.onload = function (e) {
+          setUserImage(e.target.result)
+          console.log(userImage);
+        };
+        reader.readAsDataURL(userImage.files[0]);
+    }
+    else{
+      //Toast mesaj eklenecek.
+      console.log("işlem yapılamadı");
+    }
+    }
 
     function closeHandleClick(){
         setView(!view)
@@ -14,11 +39,13 @@ export default function Dialog({viewControl}){
 
     async function newUserAdd(){
         //Boşlukları temizleyerek boş string gönderilmesinin önüne geçildi
-        if(userName.trim() !== "" && userEmail.trim() !== "" && userPassword.trim() !== ""){
+        if(userImage && userName.trim() !== "" && userEmail.trim() !== "" && userPassword.trim() !== ""){
             const response = await axios.post(`http://localhost:5000/api/data`,{
                 name:userName,
                 email:userEmail,
-                password:userPassword 
+                password:userPassword,
+                image:userImage
+
             })
             console.log(response)
             setView(false)
@@ -41,9 +68,9 @@ export default function Dialog({viewControl}){
                     New User
                   </h3>
                   <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none">
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      ×
+                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" onClick={closeHandleClick} >
+                    <span className="bg-transparent text-red-500 opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                      X
                     </span>
                   </button>
                 </div>
@@ -53,6 +80,8 @@ export default function Dialog({viewControl}){
                         <input value={userName} onChange={(event) => setUserName(event.target.value)} placeholder="name" className="outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
                         <input value={userEmail} onChange={(event) => setUserEmail(event.target.value)}  placeholder="email" className="outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
                         <input value={userPassword} onChange={(event) => setUserPassword(event.target.value)} placeholder="password" type="password" className="outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
+                        <img height={150} width={100} src={`${userImage}`} alt="" />
+                        <input accept="image/png, image/jpeg"  onChange={(event) => setUserImage(event.target)} type="file" />
                     </div>
                   
                 </div>
