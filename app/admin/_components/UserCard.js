@@ -12,7 +12,10 @@ export default function UserCard({user}){
             <div className="flex justify-between items-center w-full w-6/7 mr-5 gap-4 ">
                 <div className="flex items-center">
                     <Image width={60} height={60} className="rounded-full" src={user.image ? user.image : NotImage} alt="" />
-                    <p>{user.name}</p>
+                    <div className="flex gap-1" >
+                    <p>{user.name + ""}</p>
+                    <p>{user.surname}</p>
+                    </div>
                 </div>
                 
                 <p>{user.email}</p>

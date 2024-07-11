@@ -4,12 +4,12 @@ import { useParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react";
 import Button from "../_components/Button";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function Page (){
     //ID ye göre kullanıcı çekme işlemleri.
     const {id} = useParams()
     //console.log(id);
-    //const ref = useRef()
     
     const [userName , setUserName] = useState("")
     const [userSurname , setUserSurname] = useState("")
@@ -19,8 +19,29 @@ export default function Page (){
     const [userBirthDay , setUserBirthDay] = useState("")
     const [userPassword , setUserPassword] = useState("")
     const [userImage , setUserImage] = useState("")
+    const [imageChanege  , setImageChange] = useState(true)
 
     const router = useRouter()
+
+    function updateImage(){
+        console.log("Resmi güncelleme işlemi yapıldı");
+        
+        // console.log(userImage);
+        // console.log(userImage.files);
+        // console.log(userImage.files[0]);
+        if(imageChanege && userImage && userImage.files && userImage.files[0] ){
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                setUserImage(e.target.result)
+                //console.log(userImage);
+            };
+            reader.readAsDataURL(userImage.files[0]);
+        }
+    }
+
+    useEffect(() => {
+        updateImage()
+    },[userImage])
 
     async function getUser(){
         const {data} = await axios.get(`http://localhost:5000/api/data/user/${id}`)
@@ -56,7 +77,6 @@ export default function Page (){
         // console.log(res)
         router.push(`/admin/users`)
     }
-    
 
     useEffect(() => {
         getUser()
@@ -64,8 +84,13 @@ export default function Page (){
 
     return (<div className="p-10 gap-5">
             <div className="flex items-center gap-5 p-5" >
-                <img width={200} height={200} className="rounded-full" src={`${userImage}`} alt="" />
+                {/* Resmin üzerine tıklanınca dosya seçme ekranı çıkıyor */}
+                <label htmlFor="file-upload" className="hover:cursor-pointer"  >
+                    <img width={200}  height={200} className="rounded-full" src={`${userImage}`} alt="" />
+                </label>
+                <input onChange={(event) => setUserImage(event.target)} accept="image/png, image/jpeg" id="file-upload" type="file" className="hidden" />
                 <Button name={"User Remove"} />
+
             </div>
             <div className="flex flex-col gap-5">
                 {/* ROW - 1 */}

@@ -1,6 +1,5 @@
 "use client";
 import axios from "axios";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react"
 
 
@@ -16,8 +15,6 @@ export default function Dialog({viewControl}){
     const [userPassword,setUserPassword] = useState("")
     const [userImage , setUserImage] = useState()
 
-    
-
     //Her resim eklendiğinde resmi güncellemek için kullanılıyor.
     useEffect(() => {
       uploadImages()
@@ -30,7 +27,7 @@ export default function Dialog({viewControl}){
         let reader = new FileReader();
         reader.onload = function (e) {
           setUserImage(e.target.result)
-          console.log(userImage);
+          //console.log(userImage);
         };
         reader.readAsDataURL(userImage.files[0]);
     }
@@ -46,15 +43,14 @@ export default function Dialog({viewControl}){
 
     async function newUserAdd(){
         //Boşlukları temizleyerek boş string gönderilmesinin önüne geçildi
-
-        console.log(userName+
-          userSurname+
-          userEmail+
-          userPassword+
-          
-          userGender+
-          userBirthDay+
-          userPhoneNumber);
+        //console.log(userImage)
+        // console.log(userName+
+        //   userSurname+
+        //   userEmail+
+        //   userPassword+
+        //   userGender+
+        //   userBirthDay+
+        //   userPhoneNumber);
 
 
         if(userImage && userName.trim() !== "" && userEmail.trim() !== "" && userPassword.trim() !== "" ){
@@ -69,7 +65,7 @@ export default function Dialog({viewControl}){
                 phoneNumber:userPhoneNumber
               
             })
-            console.log(response)
+            //console.log(response)
             setView(false)
         }else{
             //Boşluklar için toast mesaj gönderilecek

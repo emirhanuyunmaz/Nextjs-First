@@ -3,9 +3,8 @@
 import Button from "../_components/Button";
 import UserCard from "../_components/UserCard";
 import Dialog from "../_components/Dialog";
-import {  Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import Loading from "../loading";
 
 export default function Users(){
 
@@ -33,7 +32,6 @@ export default function Users(){
             const {data} = await axios.get(`http://localhost:5000/api/data`)
             setAllUser(data)
         }
-        
     }
     useEffect(() => {
         getAllUsers()
@@ -41,7 +39,6 @@ export default function Users(){
 
     return(
         <div className="mt-10 ml-10 ">
-            
             {
                 dialogOpen && <Dialog viewControl={dialogOpen}/> 
             }
@@ -55,8 +52,8 @@ export default function Users(){
             
         </div>
         <div className="flex flex-col gap-3 mt-5">
-            <p>users list</p>
-        <div className = "flex justify-between w-5/6 " >
+            <p className="text-slate-400 text-sm" >users list</p>
+        <div className = "flex justify-between ms-20 me-52 " >
             <p className="text-slate-400 text-sm" >Name</p>
             <p className="text-slate-400 text-sm" >Email</p>
             <p className="text-slate-400 text-sm" >Password</p>
