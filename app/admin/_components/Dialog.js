@@ -5,8 +5,12 @@ import { useEffect, useState } from "react"
 
 export default function Dialog({viewControl}){
   //Kullanıcı Ekleme işlemi yapılcağı alan...
-    const [view,setView] = useState(viewControl)
+    const [view,setView] = useState(viewControl)//Bu değişken dialog penceresinin görünüp görünmemesini belirler.
     const [userName,setUserName] = useState("")
+    const [userSurname,setUserSurname] = useState("")
+    const [userPhoneNumber,setUserPhoneNumber] = useState("")
+    const [userBirthDay,setUserBirthDay] = useState("")
+    const [userGender,setUserGender] = useState("")
     const [userEmail,setUserEmail] = useState("")
     const [userPassword,setUserPassword] = useState("")
     const [userImage , setUserImage] = useState()
@@ -39,13 +43,28 @@ export default function Dialog({viewControl}){
 
     async function newUserAdd(){
         //Boşlukları temizleyerek boş string gönderilmesinin önüne geçildi
-        if(userImage && userName.trim() !== "" && userEmail.trim() !== "" && userPassword.trim() !== ""){
+
+        console.log(userName+
+          userSurname+
+          userEmail+
+          userPassword+
+          
+          userGender+
+          userBirthDay+
+          userPhoneNumber);
+
+
+        if(userImage && userName.trim() !== "" && userEmail.trim() !== "" && userPassword.trim() !== "" ){
             const response = await axios.post(`http://localhost:5000/api/data`,{
                 name:userName,
+                surname:userSurname,
                 email:userEmail,
                 password:userPassword,
-                image:userImage
-
+                image:userImage,
+                gender:userGender,
+                birthDay:userBirthDay,
+                phoneNumber:userPhoneNumber
+              
             })
             console.log(response)
             setView(false)
@@ -58,7 +77,7 @@ export default function Dialog({viewControl}){
     <>
     {
         view && <>
-            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+            <div className="pt-10 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
@@ -77,10 +96,33 @@ export default function Dialog({viewControl}){
                 {/*body*/}
                 <div className="relative p-6 flex-auto ">
                     <div className="flex-col ">
-                        <input value={userName} onChange={(event) => setUserName(event.target.value)} placeholder="name" className="outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
-                        <input value={userEmail} onChange={(event) => setUserEmail(event.target.value)}  placeholder="email" className="outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
-                        <input value={userPassword} onChange={(event) => setUserPassword(event.target.value)} placeholder="password" type="password" className="outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
-                        <img height={150} width={100} src={`${userImage}`} alt="" />
+                        <input value={userName} onChange={(event) => setUserName(event.target.value)} placeholder="name" className="w-1/2 m-3 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
+                        
+                        <input value={userSurname} onChange={(event) => setUserSurname(event.target.value)} placeholder="surname" className="w-1/2 m-3 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
+
+                        <input value={userEmail} onChange={(event) => setUserEmail(event.target.value)}  placeholder="email" className="w-1/2 m-3 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
+
+                        <input type="date" value={userBirthDay} onChange={(event) => setUserBirthDay(event.target.value)}  placeholder="birth day" className="w-1/2 m-3 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
+
+                        <input value={userPassword} onChange={(event) => setUserPassword(event.target.value)} placeholder="password" type="password" className="w-1/2 m-3 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
+
+                        <input value={userPhoneNumber} onChange={(event) => setUserPhoneNumber(event.target.value)} placeholder="phone number" type="tel" className="w-1/2 m-3 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
+                        
+                        <div className="flex-col w-full m-3 " >
+                        <label htmlFor="">Gender</label>
+                        <div className="flex gap-5  ">
+                            <div className="flex gap-3  h-auto border-2 px-4 py-1">
+                                <label htmlFor="0" >MEN</label>
+                                <input type="radio" value={userGender} onChange={() => setUserGender(0)} id="0" name="Gender" className=" w-full outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
+                            </div>
+                            <div className="flex gap-3 border-2 px-4 py-1 " >
+                            <label htmlFor="1">WOMAN</label>
+                            <input type="radio" value={userGender}  onChange={() => setUserGender(1)} id="1" name="Gender" className=" w-full outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
+                            </div>
+                        </div>
+
+                    </div>
+                        <img height={150} width={100} src={`${userImage}` } alt="" />
                         <input accept="image/png, image/jpeg"  onChange={(event) => setUserImage(event.target)} type="file" />
                     </div>
                   
