@@ -1,13 +1,15 @@
 "use client"
 import axios from "axios";
 import { useParams } from "next/navigation"
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "../_components/Button";
+import { useRouter } from "next/navigation";
 
 export default function Page (){
     //ID ye göre kullanıcı çekme işlemleri.
     const {id} = useParams()
     //console.log(id);
+    //const ref = useRef()
     
     const [userName , setUserName] = useState("")
     const [userSurname , setUserSurname] = useState("")
@@ -18,7 +20,8 @@ export default function Page (){
     const [userPassword , setUserPassword] = useState("")
     const [userImage , setUserImage] = useState("")
 
-    
+    const router = useRouter()
+
     async function getUser(){
         const {data} = await axios.get(`http://localhost:5000/api/data/user/${id}`)
         //console.log(data[0].image);
@@ -32,19 +35,28 @@ export default function Page (){
         setUserImage(data[0].image)
     }
     
-    function updateOnClick(){
-        console.log(userName)
-        console.log(userSurname)
-        console.log(userEmail)
-        console.log(userPhoneNumber)
-        console.log(userGender)
-        console.log(userBirthDay)
-        console.log(userPassword)
+    async function updateOnClick(){
+        // console.log(userName)
+        // console.log(userSurname)
+        // console.log(userEmail)
+        // console.log(userPhoneNumber)
+        // console.log(userGender)
+        // console.log(userBirthDay)
+        // console.log(userPassword)
+        const res = await axios.post(`http://localhost:5000/api/data/${id}`,{
+            name:userName,
+            surname:userSurname,
+            email:userEmail,
+            phoneNumber:userPhoneNumber,
+            gender:userGender,
+            birdthDay:userBirthDay,
+            password:userPassword,
+            image:userImage
+        })
+        // console.log(res)
+        router.push(`/admin/users`)
     }
     
-    useEffect(() => {
-
-    },[])
 
     useEffect(() => {
         getUser()

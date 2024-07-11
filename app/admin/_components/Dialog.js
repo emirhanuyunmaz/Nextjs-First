@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react"
 
 
@@ -14,6 +15,8 @@ export default function Dialog({viewControl}){
     const [userEmail,setUserEmail] = useState("")
     const [userPassword,setUserPassword] = useState("")
     const [userImage , setUserImage] = useState()
+
+    
 
     //Her resim eklendiğinde resmi güncellemek için kullanılıyor.
     useEffect(() => {
