@@ -8,9 +8,9 @@ export default function UserCard({user}){
     // [ ] Error işlemleri
 
     return(
-        <div className="flex justify-between bg-slate-400 px-1 gap-5 py-2 rounded-xl">
+        <div className="flex justify-between bg-slate-400 text-white px-1 gap-5 py-2 rounded-xl">
             <div className="flex justify-between items-center w-full w-6/7 mr-5 gap-4 ">
-                <div className="flex items-center">
+                <div className="flex items-center ps-3 gap-3">
                     <Image width={60} height={60} className="rounded-full" src={user.image ? user.image : NotImage} alt="" />
                     <div className="flex gap-1" >
                     <p>{user.name + ""}</p>
@@ -21,7 +21,7 @@ export default function UserCard({user}){
                 <p>{user.email}</p>
                 <p>{user.password}</p>
             </div>
-            <div className="flex items-center gap-3 w-1/7">
+            <div className="flex items-center justify-center gap-3 w-1/7 mr-8">
                 <ViewButton id={user._id} />
                 <DeleteButton id={user._id} />
             </div>

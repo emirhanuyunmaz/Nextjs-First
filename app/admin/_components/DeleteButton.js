@@ -1,4 +1,6 @@
 import axios from "axios"
+import { MdDelete } from "react-icons/md";
+
 
 export default function DeleteButton({id}){
 
@@ -10,7 +12,7 @@ export default function DeleteButton({id}){
         //console.log(res);
     }
 
-    return(<button onClick={deleteHandleClick} className="bg-red-500 px-2 h-8 py-1 rounded-xl text-sm">
-        Delete
+    return(<button onClick={deleteHandleClick} className="px-2 h-8 py-1 rounded-xl flex items-center justify-center ">
+        <MdDelete className="hover:text-slate-500 duration-200" />
     </button>)
 }

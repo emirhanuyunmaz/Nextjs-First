@@ -1,10 +1,9 @@
 "use client"
 import axios from "axios";
 import { useParams } from "next/navigation"
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../_components/Button";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 export default function Page (){
     //ID ye göre kullanıcı çekme işlemleri.
