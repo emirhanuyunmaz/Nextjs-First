@@ -21,6 +21,7 @@ export default function Dialog({viewControl}){
     useEffect(() => {
       uploadImages()
     },[userImage] )
+    // console.log(userImage);
 
     function uploadImages(){
       //console.log(userImage);
@@ -32,12 +33,10 @@ export default function Dialog({viewControl}){
           //console.log(userImage);
         };
         reader.readAsDataURL(userImage.files[0]);
-    }
-    else{
-
-      console.log("işlem yapılamadı");
-
-    }
+      }
+      else{
+        console.log("işlem yapılamadı");
+      }
     }
 
     function closeHandleClick(){
@@ -45,17 +44,16 @@ export default function Dialog({viewControl}){
     }
 
     async function newUserAdd(){
-        //Boşlukları temizleyerek boş string gönderilmesinin önüne geçildi
-        //console.log(userImage)
-        // console.log(userName+
-        //   userSurname+
-        //   userEmail+
-        //   userPassword+
-        //   userGender+
-        //   userBirthDay+
-        //   userPhoneNumber);
-
-
+      //console.log(userImage)
+      // console.log(userName+
+      //   userSurname+
+      //   userEmail+
+      //   userPassword+
+      //   userGender+
+      //   userBirthDay+
+      //   userPhoneNumber);
+      
+      //Boşlukları temizleyerek boş string gönderilmesinin önüne geçildi
         if(userImage && userName.trim() !== "" && userEmail.trim() !== "" && userPassword.trim() !== "" ){
             const response = await axios.post(`http://localhost:5000/api/data`,{
                 name:userName,
@@ -66,7 +64,6 @@ export default function Dialog({viewControl}){
                 gender:userGender,
                 birthDay:userBirthDay,
                 phoneNumber:userPhoneNumber
-              
             })
             //console.log(response)
             setView(false)
@@ -80,8 +77,8 @@ export default function Dialog({viewControl}){
     <>
     {
         view && <>
-            <div className="pt-5  justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+            <div className="pt-5 flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+            <div className="relative flex justify-center items-center w-auto my-6 mx-auto max-w-3xl">
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
@@ -90,14 +87,14 @@ export default function Dialog({viewControl}){
                     New User
                   </h3>
                   <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-90 float-right text-xl leading-none font-semibold outline-none focus:outline-none" onClick={closeHandleClick} >
+                    className="p-1 ml-auto bg-transparent border-0 text-slate-400 hover:text-slate-500 float-right text-xl leading-none font-semibold outline-none focus:outline-none" onClick={closeHandleClick} >
                     X
                   </button>
                 </div>
                 {/*body*/}
-                <div className="relative p-6 flex-auto justify-center items-center ">
+                <div className="relative p-6 w-[100%] text-center flex-auto justify-center items-center ">
                     <div className="flex-col justify-center items-center ">
-                       <div>
+                       <div className="">
                           <input value={userName} onChange={(event) => setUserName(event.target.value)} placeholder="name" className="w-1/3 m-3 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
                             
                             <input value={userSurname} onChange={(event) => setUserSurname(event.target.value)} placeholder="surname" className="w-1/3 m-3 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
@@ -110,9 +107,9 @@ export default function Dialog({viewControl}){
 
                             <input value={userPhoneNumber} onChange={(event) => setUserPhoneNumber(event.target.value)} placeholder="phone number" type="tel" className="w-1/3 m-3 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
                             
-                            <div className="flex-col w-full m-3 " >
+                            <div className="flex-col  m-3 " >
                             <label htmlFor="">Gender</label>
-                            <div className="flex gap-5  ">
+                            <div className="flex gap-5  justify-center mx-auto ">
                                 <div className="flex gap-3  h-auto border-2 px-4 py-1">
                                     <label htmlFor="0" >MEN</label>
                                     <input type="radio" value={userGender} onChange={() => setUserGender(0)} id="0" name="Gender" className=" w-full outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
@@ -124,35 +121,33 @@ export default function Dialog({viewControl}){
                             </div>
 
                         </div>
-                            <img height={150} width={100} src={`${userImage}` } alt="" />
-                            <input accept="image/png, image/jpeg"  onChange={(event) => setUserImage(event.target)} type="file" />
+                            <label  className="flex justify-center" htmlFor="newUserImage">
+                              <img height={150} width={100} src={`${userImage ? userImage : "/not_img.jpeg"}`} alt="" />
+                            </label>
+                            <input id="newUserImage" accept="image/png, image/jpeg" className="hidden"  onChange={(event) => setUserImage(event.target)} type="file" />
                         </div>
                        </div>
                   
                 </div>
                 {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                <div className="flex items-center gap-5 justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
                   <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="text-slate-400 hover:text-slate-500"
                     type="button"
                     onClick={closeHandleClick}
                   >
                     Close
                   </button>
                   <button
-                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="px-2 py-1 text-white bg-slate-400 rounded-xl hover:bg-slate-500"
                     type="button" onClick={newUserAdd}>
-                    Save Changes
+                    Add User
                   </button>
                 </div>
               </div>
             </div>
-            {/* Dialog - Start */}
-            {
-              dialogShow && <>
-              <div className="absolute text-black bottom-0"><Toast/></div>
-              </>
-            }
+            {/* Dialog - Start */}  
+              <div className="absolute text-black bottom-0"><Toast control={dialogShow} setControl={setDialogShow} /></div>
             {/* Dialog - End */}
           </div>
           <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
