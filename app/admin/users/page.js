@@ -22,8 +22,22 @@ export default function Users(){
         console.log("Arama işlemi yapıldı");
         event.preventDefault()
         if(searchUser.trim() !== ""){
-            const {data} = await axios(`http://localhost:5000/api/data/search/${searchUser}`)
-            setAllUser(data);
+            const {data} = await axios.get(`http://localhost:5000/api/data/${page}`)
+            // setAllUser(data);
+            //console.log(allUser);
+            setAllUser(data)
+            let userSearch =[]
+            allUser.map((item,index) => {
+                // console.log(item.name);
+                // console.log();
+                if(item.name.search(new RegExp(searchUser, "i")) !== -1){
+                    userSearch.push(item)
+                    console.log(item);
+                }
+            } )
+            // console.log(userSearch)
+            setAllUser(userSearch)
+            // console.log(allUser.length);
         }
     }
 
