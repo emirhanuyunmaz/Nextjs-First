@@ -8,9 +8,9 @@ export default function Layout({children}){
             <Sidebar/>
         </div>
         <div className="w-4/5 pr-5">
-            <Suspense fallback={<Loading/>}>
+            {/* <Suspense fallback={<Loading/>}> */}
                 {children}
-            </Suspense>
+            {/* </Suspense> */}
         </div>
     </div>)
 }

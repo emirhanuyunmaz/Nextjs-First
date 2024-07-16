@@ -1,9 +1,10 @@
 "use client"
 import axios from "axios";
-import { useParams } from "next/navigation"
+import { notFound, useParams } from "next/navigation"
 import { useEffect, useState } from "react";
-import Button from "../_components/Button";
+import Button from "../../_components/Button";
 import { useRouter } from "next/navigation";
+import Error from "next/error";
 
 export default function Page (){
     //ID ye göre kullanıcı çekme işlemleri.
@@ -43,16 +44,22 @@ export default function Page (){
     },[userImage])
 
     async function getUser(){
-        const {data} = await axios.get(`http://localhost:5000/api/data/user/${id}`)
-        //console.log(data[0].image);
-        setUserName(data[0].name)
-        setUserSurname(data[0].surname)
-        setUserEmail(data[0].email)
-        setUserPhoneNumber(data[0].phoneNumber)
-        setUserGender(data[0].gender)
-        setUserBirthDay(data[0].birthDay)
-        setUserPassword(data[0].password)
-        setUserImage(data[0].image)
+        try{
+            const {data} = await axios.get(`http://localhost:5000/api/data/user/${id}`)
+            //console.log(data[0].image);
+            setUserName(data[0].name)
+            setUserSurname(data[0].surname)
+            setUserEmail(data[0].email)
+            setUserPhoneNumber(data[0].phoneNumber)
+            setUserGender(data[0].gender)
+            setUserBirthDay(data[0].birthDay)
+            setUserPassword(data[0].password)
+            setUserImage(data[0].image)
+        }catch(e){
+            console.log(e);
+            //notFound()
+            throw new Error(e)
+        }
     }
     
     async function updateOnClick(){

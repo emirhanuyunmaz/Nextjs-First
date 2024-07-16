@@ -22,7 +22,7 @@ export default function UserCard({user}){
                 <p>{user.password}</p>
             </div>
             <div className="flex items-center justify-center gap-3 w-1/7 mr-8">
-                <ViewButton id={user._id} />
+                <ViewButton id={`/users/${user._id}`} />
                 <DeleteButton id={user._id} />
             </div>
         </div>
