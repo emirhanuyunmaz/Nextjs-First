@@ -1,5 +1,4 @@
 "use client";
-
 import Button from "../_components/Button";
 import UserCard from "../_components/UserCard";
 import Dialog from "../_components/Dialog";
@@ -18,32 +17,32 @@ export default function Users(){
         setDialogOpen(!dialogOpen)
     }
 
-    async function searchUserHandleClick(event){
-        console.log("Arama işlemi yapıldı");
-        event.preventDefault()
-        if(searchUser.trim() !== ""){
-            const {data} = await axios.get(`http://localhost:5000/api/data/${page}`)
-            // setAllUser(data);
-            //console.log(allUser);
-            setAllUser(data)
-            let userSearch =[]
-            allUser.map((item,index) => {
-                // console.log(item.name);
-                // console.log();
-                if(item.name.search(new RegExp(searchUser, "i")) !== -1){
-                    userSearch.push(item)
-                    console.log(item);
-                }
-            } )
-            // console.log(userSearch)
-            setAllUser(userSearch)
-            // console.log(allUser.length);
-        }
+    async function searchInput(event){
+
+        console.log(event.target.value);
+        const {data} = await axios.get(`http://localhost:5000/api/data/allData/${event.target.value}`)
+        console.log(data);
+        setAllUser(data)
+        setOldUserLengt(data.length)
+
+        //Sayfa içerisindeki verilerin aranması işlemi
+        // if(searchUser.trim() !== ""){
+        //     console.log(allUser);
+        //     let userSearch =[]
+        //     allUser.map((item) => {
+        //         if((item.name.search(new RegExp(event.target.value, "i")) !== -1) || (item.surname.search(new RegExp(event.target.value, "i")) !== -1) ){
+        //             userSearch.push(item)
+        //             // console.log(item);
+        //         }
+        //     })
+        //     setAllUser(userSearch)
+        // }
     }
 
     async function getAllUsers(){
         //Yüklenme işlemini izlemek için konuldu
         //await new Promise((resolve) => setTimeout(resolve, 2000));
+        // console.log("Arama işlemi c :"+searchUser.length);
         const {data} = await axios.get(`http://localhost:5000/api/data/length`)
         setOldUserLengt(data.length)
         if(page >= 1 ){
@@ -56,13 +55,11 @@ export default function Users(){
                 }
             }
         }
-
     }
      
     useEffect(() => {
         getAllUsers()
     },[allUser,page])
-
     
     return(
         <div className="mt-10 ml-10 ">
@@ -71,8 +68,14 @@ export default function Users(){
             }
         <div className="flex justify-between items-center gap-4 text-white">
             <form className="flex gap-5">
-                <input value={searchUser} onChange={(event) => setSearchUser(event.target.value)} type="text" className="text-gray-500 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" placeholder="Serach" />
-                <Button onClick={(event) => searchUserHandleClick(event)} name={`Search`} />
+                {/* veriler bir karakter geriden geliyor */}
+                <input value={searchUser} onChange={(event) => {
+                     setSearchUser(event.target.value)
+                    // searchUserHandleClick(event)
+                    // console.log(event.target.value);
+                    searchInput(event)
+                    }} type="text" className="text-gray-500 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" placeholder="Serach" />
+                {/* <Button onClick={(event) => searchUserHandleClick(event)} name={`Search`} /> */}
                 <Button name={"Refresh"} />
             </form>
             <Button name={`New User`} onClick={newUserHandleClick}/>
@@ -87,7 +90,7 @@ export default function Users(){
             
         <div className="absolute bottom-3 left-1/2">
             <div className="flex mt-5 justify-center text-white gap-2 ">
-                {(() => {
+                { searchUser.length === 0 && (() => {
                     //console.log(page);
                     const arr = [];
                     // Buradaki işlemsayesinde 6 nın katı olmaya elemanları da gösterme işlemi yapılcaktır.
@@ -97,7 +100,11 @@ export default function Users(){
                     for (let i = 1; i <= (oldUserLength/6); i++) {
                         arr.push(
                             <div key={i} >
-                                <button onClick={()=>setPage(i)} className="bg-slate-400 px-4 py-2 rounded-full " >{i}</button>
+                                <button onClick={()=>{
+                                    setPage(i)
+                                    setSearchUser("")
+                                    getAllUsers()
+                                    }} className="bg-slate-400 px-4 py-2 rounded-full " >{i}</button>
                             </div>
                         );
                     }
@@ -105,9 +112,6 @@ export default function Users(){
             })()}
             </div>
         </div>
-        {/* <div className="absolute bottom-0 ">
-            <Toast/>
-        </div> */}
     </div>
     )
 }
