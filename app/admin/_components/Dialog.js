@@ -119,7 +119,6 @@ export default function Dialog({viewControl}){
                                 <input type="radio" value={userGender}  onChange={() => setUserGender(1)} id="1" name="Gender" className=" w-full outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
                                 </div>
                             </div>
-
                         </div>
                             <label  className="flex justify-center" htmlFor="newUserImage">
                               <img height={150} width={100} src={`${userImage ? userImage : "/not_img.jpeg"}`} alt="" />
@@ -153,6 +152,5 @@ export default function Dialog({viewControl}){
           <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
         </>
     }
-    </>
-        )
+    </>)
 }

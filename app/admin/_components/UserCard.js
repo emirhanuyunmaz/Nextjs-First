@@ -4,9 +4,7 @@ import NotImage from "../../../public/not_img.jpeg"
 import Image from "next/image"
 
 export default function UserCard({user}){
-    // [ ] Loading işlemi
-    // [ ] Error işlemleri
-
+    
     return(
         <div className="flex justify-between bg-slate-400 text-white px-1 gap-5 py-2 rounded-xl">
             <div className="flex justify-between items-center w-full w-6/7 mr-5 gap-4 ">

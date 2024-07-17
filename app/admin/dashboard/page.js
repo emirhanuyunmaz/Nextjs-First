@@ -5,8 +5,8 @@ import DashboardTotalUserCard from "../_components/DashboardTotalUserCard";
 export default function Dashboard(){
     return(<div className="flex flex-col mt-10 mx-8">
         <div className="flex gap-5">
-        <DashboardTotalUserCard/>
-        <DashboardGender/>
+            <DashboardTotalUserCard/>
+            <DashboardGender/>
         </div>
         <DashboardLatesTransaction/>
     </div>)
