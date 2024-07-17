@@ -19,7 +19,6 @@ export default function Users(){
     }
 
     async function searchInput(event){
-
         console.log(event.target.value);
         const {data} = await axios.get(`http://localhost:5000/api/data/allData/${event.target.value}`)
         console.log(data);
@@ -87,7 +86,7 @@ export default function Users(){
                 <Button name={`New User`} onClick={newUserHandleClick}/>
                 
             </div>
-            <div className="flex flex-col gap-3 mt-5">
+            <div className="flex flex-col gap-3 mt-5 mx-5">
                 <p className="text-slate-400 text-sm" >users list</p>
                 {
                     allUser.length !== 0 && allUser.map((user,index) => <UserCard key={index} user ={user}  />)

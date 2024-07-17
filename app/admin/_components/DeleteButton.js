@@ -9,7 +9,16 @@ export default function DeleteButton({id}){
         const res = await axios.delete(`http://localhost:5000/api/data/${id}`,
             {id:id}
         )
-        //console.log(res);
+        // console.log(res);
+        const responseTransaction = await axios.post(`http://localhost:5000/api/data/transaction`,{
+            id:res.data[0]._id,
+            name:res.data[0].name,
+            surname:res.data[0].surname,
+            email:res.data[0].email,
+            transaction:"Deleted"
+        })
+
+        // console.log("RESPONSE DELETED::"+res);
     }
 
     return(<button onClick={deleteHandleClick} className="px-2 h-8 py-1 rounded-xl flex items-center justify-center ">

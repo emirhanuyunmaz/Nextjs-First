@@ -44,14 +44,6 @@ export default function Dialog({viewControl}){
     }
 
     async function newUserAdd(){
-      //console.log(userImage)
-      // console.log(userName+
-      //   userSurname+
-      //   userEmail+
-      //   userPassword+
-      //   userGender+
-      //   userBirthDay+
-      //   userPhoneNumber);
       
       //Boşlukları temizleyerek boş string gönderilmesinin önüne geçildi
         if(userImage && userName.trim() !== "" && userEmail.trim() !== "" && userPassword.trim() !== "" ){
@@ -65,7 +57,15 @@ export default function Dialog({viewControl}){
                 birthDay:userBirthDay,
                 phoneNumber:userPhoneNumber
             })
-            //console.log(response)
+            console.log(response);
+            const responseTransaction = await axios.post(`http://localhost:5000/api/data/transaction`,{
+                id:response.data._id,
+                name:userName,
+                surname:userSurname,
+                email:userEmail,
+                transaction:"Register"
+            })
+            console.log("aaaa"+responseTransaction)
             setView(false)
         }else{
             //Boşluklar için toast mesaj gönderilecek
