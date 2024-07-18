@@ -10,7 +10,7 @@ export default function DashboardLatesTransaction (){
     const [fullData , setFullData] = useState(false)
     async function getAllData(){
         const {data} = await axios.get(`http://localhost:5000/api/data/transaction/${value}`)
-        console.log(data);
+        console.log(data)
         setUserData(data)
     }
 

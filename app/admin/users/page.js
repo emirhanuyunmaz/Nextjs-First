@@ -25,18 +25,6 @@ export default function Users(){
         setAllUser(data)
         setOldUserLengt(data.length)
 
-        //Sayfa içerisindeki verilerin aranması işlemi
-        // if(searchUser.trim() !== ""){
-        //     console.log(allUser);
-        //     let userSearch =[]
-        //     allUser.map((item) => {
-        //         if((item.name.search(new RegExp(event.target.value, "i")) !== -1) || (item.surname.search(new RegExp(event.target.value, "i")) !== -1) ){
-        //             userSearch.push(item)
-        //             console.log(item);
-        //         }
-        //     })
-        //     setAllUser(userSearch)
-        // }
     }
 
     async function getAllUsers(){
