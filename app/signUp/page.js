@@ -8,17 +8,15 @@ export default function Page(){
     const [password,setPassword] = useState("")
     const router = useRouter()
 
+    //Giriş yapılınca giriş yapıldı olarak eylemlere eklenebilir.
     async function signUpOnClick(event){
         event.preventDefault()
-        const data = await axios.post('http://localhost:5000/api/data/signUp',{email,password},{
+        const data = await axios.post('http://localhost:5000/api/user/data/signUp',{email,password},{
             withCredentials:true
         })
         console.log("asdds::"+data.request);
         if(data.status === 201){
-            // localStorage.setItem('token', data.data.token )
-            
-            router.push("/user")
-            //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OTdiNjdiOWY4ZDMyMGQxYzkyY2M1MSIsImlhdCI6MTcyMTI4NjIyMywiZXhwIjoxNzIxMjg3MTIzfQ.Nj5PBZK_AENOddw4QbFtHtHL-3LWNPw0varxkCbGJ1g
+            router.push("/user")            
         }
     }
 

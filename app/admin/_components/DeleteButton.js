@@ -6,11 +6,11 @@ export default function DeleteButton({id}){
 
     async function deleteHandleClick(){
         // console.log(id)
-        const res = await axios.delete(`http://localhost:5000/api/data/${id}`,
+        const res = await axios.delete(`http://localhost:5000/api/admin/data/${id}`,
             {id:id}
         )
-        // console.log(res);
-        const responseTransaction = await axios.post(`http://localhost:5000/api/data/transaction`,{
+        console.log(res);
+        const responseTransaction = await axios.post(`http://localhost:5000/api/dashboard/data/transaction`,{
             id:res.data[0]._id,
             name:res.data[0].name,
             surname:res.data[0].surname,

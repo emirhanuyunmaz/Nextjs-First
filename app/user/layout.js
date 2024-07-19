@@ -1,11 +1,11 @@
-import { cookies } from "next/headers"
-import Page from "./page";
+
 
 
 export default function Layout({children}){
-    const cookieStore = cookies()
-    const token = cookieStore.get("jwt").value
-    console.log("Layout get token"+token);
+    //Cookie ler client side tarafında alınamasığı için bu kusumda alınmaya çalışıldı
+    // const cookieStore = cookies()
+    // const token = cookieStore.get("jwt").value
+    // console.log("Layout get token"+token);
     
 
     return(<div>

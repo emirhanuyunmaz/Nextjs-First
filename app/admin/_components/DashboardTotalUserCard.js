@@ -6,7 +6,7 @@ export default function DashboardTotalUserCard(){
     const [userLength,setUserLength] = useState(0)
 
     async function getTotalUser(){
-        const {data} = await axios.get("http://localhost:5000/api/data/length")
+        const {data} = await axios.get("http://localhost:5000/api/admin/data/length")
         console.log(data.length);
         setUserLength(data.length)
     }

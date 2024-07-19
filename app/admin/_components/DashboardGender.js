@@ -9,7 +9,7 @@ export default function DashboardGender(){
     const [dataGender,setDataGender] = useState({})
 
     async function getData(){
-        const {data} = await axios.get("http://localhost:5000/api/data/transaction/gender")
+        const {data} = await axios.get("http://localhost:5000/api/dashboard/data/transaction/gender")
         // console.log(data);
         setDataGender(data)
     }

@@ -20,7 +20,7 @@ export default function Users(){
 
     async function searchInput(event){
         console.log(event.target.value);
-        const {data} = await axios.get(`http://localhost:5000/api/data/allData/${event.target.value}`)
+        const {data} = await axios.get(`http://localhost:5000/api/admin/data/allData/${event.target.value}`)
         console.log(data);
         setAllUser(data)
         setOldUserLengt(data.length)
@@ -32,11 +32,11 @@ export default function Users(){
         // await new Promise((resolve) => setTimeout(resolve, 2000));
         // console.log("Arama işlemi c :"+searchUser.length);
         try{
-            const {data} = await axios.get(`http://localhost:5000/api/data/length`)
+            const {data} = await axios.get(`http://localhost:5000/api/admin/data/length`)
             setOldUserLengt(data.length)
             if(page >= 1 ){
                 if(searchUser.trim() === "" ){
-                    const {data} = await axios.get(`http://localhost:5000/api/data/${page}`)
+                    const {data} = await axios.get(`http://localhost:5000/api/admin/data/${page}`)
                     setAllUser(data)
                     //console.log(data.length);
                     if(data.length === 0){

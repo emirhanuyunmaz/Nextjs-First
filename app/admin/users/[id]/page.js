@@ -45,7 +45,7 @@ export default function Page (){
 
     async function getUser(){
         try{
-            const {data} = await axios.get(`http://localhost:5000/api/data/user/${id}`)
+            const {data} = await axios.get(`http://localhost:5000/api/admin/data/user/${id}`)
             //console.log(data[0].image);
             setUserName(data[0].name)
             setUserSurname(data[0].surname)
@@ -70,7 +70,7 @@ export default function Page (){
         // console.log(userGender)
         // console.log(userBirthDay)
         // console.log(userPassword)
-        const res = await axios.post(`http://localhost:5000/api/data/${id}`,{
+        const res = await axios.post(`http://localhost:5000/api/admin/data/user/${id}`,{
             name:userName,
             surname:userSurname,
             email:userEmail,

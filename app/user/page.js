@@ -47,7 +47,7 @@ export default function Page({token}){
         // const cookie = getCookie('jwt') 
         console.log("TOKEN:::"+token);
         //Burada withCredentials cookies verileri çekme işlemi üzerine işlem yapakatadır.
-        const user = await axios.get("http://localhost:5000/api/data/userDetail",{
+        const user = await axios.get("http://localhost:5000/api/user/data/userDetail",{
             withCredentials:true
         })
         console.log(user.data[0]);
@@ -59,12 +59,13 @@ export default function Page({token}){
         setUserPhoneNumber(user.data[0].phoneNumber)
         setUserPassword(user.data[0].password)
         setUserImage(user.data[0].image)
+        setUserBirthDay(user.data[0].birthDay)
     }
 
 
     async function updateOnClick(){
         
-        const res = await axios.post(`http://localhost:5000/api/data/${userID}`,{
+        const res = await axios.post(`http://localhost:5000/api/admin/data/user/${userID}`,{
             name:userName,
             surname:userSurname,
             email:userEmail,

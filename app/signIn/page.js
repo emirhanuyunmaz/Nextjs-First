@@ -2,8 +2,10 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import Toast from "../admin/_components/Toast"
+import { useRouter } from "next/navigation"
 
 export default function Page(){
+    const router = useRouter()
     const [name,setName] = useState("")
     const [surname,setSurname] = useState("")
     const [email,setEmail] = useState("")
@@ -23,7 +25,7 @@ export default function Page(){
         event.preventDefault()
         
         if(name.trim() !== "" && surname.trim() !== "" && password.trim() !== "" && email.trim() !== "" ){
-            const response = await axios.post(`http://localhost:5000/api/data`,{
+            const response = await axios.post(`http://localhost:5000/api/admin/data`,{
                 name:name,
                 surname:surname,
                 email:email,
@@ -33,14 +35,18 @@ export default function Page(){
                 birthDay:birthDay,
                 phoneNumber:phoneNumber
             })
-            console.log(response.config);
-            const responseTransaction = await axios.post(`http://localhost:5000/api/data/transaction`,{
-                id:response.data._id,
-                name:name,
-                surname:surname,
-                email:email,
-                transaction:"Register"
-            })
+            console.log(response.status);
+            if(response.status === 201){
+
+                const responseTransaction = await axios.post(`http://localhost:5000/api/dashboard/data/transaction`,{
+                    id:response.data._id,
+                    name:name,
+                    surname:surname,
+                    email:email,
+                    transaction:"Register"
+                })
+                router.push("/signUp")
+            }
             setControl(false)
         }else{
             setControl(true)

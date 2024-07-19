@@ -47,7 +47,7 @@ export default function Dialog({viewControl}){
       
       //Boşlukları temizleyerek boş string gönderilmesinin önüne geçildi
         if(userImage && userName.trim() !== "" && userEmail.trim() !== "" && userPassword.trim() !== "" ){
-            const response = await axios.post(`http://localhost:5000/api/data`,{
+            const response = await axios.post(`http://localhost:5000/api/admin/data`,{
                 name:userName,
                 surname:userSurname,
                 email:userEmail,
@@ -58,7 +58,8 @@ export default function Dialog({viewControl}){
                 phoneNumber:userPhoneNumber
             })
             console.log(response);
-            const responseTransaction = await axios.post(`http://localhost:5000/api/data/transaction`,{
+            //Verilerin uzantıları değiştirilecek..
+            const responseTransaction = await axios.post(`http://localhost:5000/api/dashboard/data/transaction`,{
                 id:response.data._id,
                 name:userName,
                 surname:userSurname,
