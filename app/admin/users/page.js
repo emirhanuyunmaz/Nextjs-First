@@ -55,7 +55,7 @@ export default function Users(){
     },[allUser,page])
     
     return(
-            <div className="mt-10 ml-10">
+            <div className="mt-5 ml-10">
             {
                 dialogOpen && <Dialog viewControl={dialogOpen}/> 
             }

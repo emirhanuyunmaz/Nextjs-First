@@ -1,6 +1,6 @@
 "use client"
 import axios from "axios";
-import { notFound, useParams } from "next/navigation"
+import { useParams } from "next/navigation"
 import { useEffect, useState } from "react";
 import Button from "../../_components/Button";
 import { useRouter } from "next/navigation";
@@ -183,11 +183,9 @@ export default function Page (){
                     </div>
                 </div>
                 {/* ROW - 4 - END */}
-
                 <div>
                     <Button name={"Update"} onClick={updateOnClick} />
                 </div>
             </div>
-
     </div> )
 }

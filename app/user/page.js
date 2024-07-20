@@ -2,10 +2,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Button from "../admin/_components/Button";
-import { getCookie, setCookie } from "cookies-next";
-// import { cookies } from "next/headers";
-// import { cookies } from "next/headers";
-// import { cookies } from "next/headers";
+import { useRouter } from "next/navigation";
+import Toast from "./_components/Toast";
 
 export default function Page({token}){
     //Kullanıcı detay sayfası 
@@ -19,13 +17,12 @@ export default function Page({token}){
     const [userPassword , setUserPassword] = useState("")
     const [userImage , setUserImage] = useState("")
     const [imageChanege  , setImageChange] = useState(true)
+    const [toastControl , setToastControl] = useState(false)
 
-    // const cookieStore = cookies()
-    // console.log("aAAAA::"+cookieStore.get("jwt").value);
+    const route = useRouter()
 
     function updateImage(){
         console.log("Resmi güncelleme işlemi yapıldı");
-        
         console.log(userImage);
         // console.log(userImage.files);
         // console.log(userImage.files[0]);
@@ -42,29 +39,34 @@ export default function Page({token}){
 
     async function getUserDetail(){
         console.log("Veri çekme işlemi");
-        
-        // debugger;
-        // const cookie = getCookie('jwt') 
-        console.log("TOKEN:::"+token);
+         
         //Burada withCredentials cookies verileri çekme işlemi üzerine işlem yapakatadır.
         const user = await axios.get("http://localhost:5000/api/user/data/userDetail",{
             withCredentials:true
-        })
-        console.log(user.data[0]);
-        setUserID(user.data[0]._id)
-        setUserName(user.data[0].name)
-        setUserSurname(user.data[0].surname)
-        setUserEmail(user.data[0].email)
-        setUserGender(user.data[0].gender)
-        setUserPhoneNumber(user.data[0].phoneNumber)
-        setUserPassword(user.data[0].password)
-        setUserImage(user.data[0].image)
-        setUserBirthDay(user.data[0].birthDay)
+        }).catch((err) => {
+            console.log(err.response.status);
+            if( err.response?.status === 401){
+            //Kullanıcı giriş yapması için uyarı ve giriş sayfasına gönderecek
+                console.log("Kullanıcı oturum süresi dolmuş tekrar giriş yap")
+                route.push("/signUp")
+            }
+        } )
+        // console.log("Kullanıcı bilgileri::"+user);
+        if(user?.status === 201){
+            setUserID(user.data._id)
+            setUserName(user.data.name)
+            setUserSurname(user.data.surname)
+            setUserEmail(user.data.email)
+            setUserGender(user.data.gender)
+            setUserPhoneNumber(user.data.phoneNumber)
+            setUserPassword(user.data.password)
+            setUserImage(user.data.image)
+            setUserBirthDay(user.data.birthDay)
+        }   
     }
 
-
     async function updateOnClick(){
-        
+        //Kullanıcı bilgilerini güncelleme işlemi...
         const res = await axios.post(`http://localhost:5000/api/admin/data/user/${userID}`,{
             name:userName,
             surname:userSurname,
@@ -75,7 +77,12 @@ export default function Page({token}){
             password:userPassword,
             image:userImage
         })
-        // console.log(res)
+        console.log("STATUS::"+res.status)
+        if(res.status === 201 ){
+            console.log("Kullanıcı bilgileri başarı ile güncellendi...")
+            //Toast mesaj için kontrol işlemleri...
+            setToastControl(true)
+        }
         // router.push(`/admin/users`)
     }
     
@@ -87,6 +94,9 @@ export default function Page({token}){
     },[userImage])
     
     return(<div className="px-64 pt-10 gap-5 ">
+        <div className="absolute t-5 left-2/4">
+            <Toast control={toastControl} setControl={setToastControl} />
+        </div>
         <div className="flex items-center gap-5 p-5" >
             {/* Resmin üzerine tıklanınca dosya seçme ekranı çıkıyor */}
             <label htmlFor="file-upload" className="hover:cursor-pointer"  >
@@ -182,6 +192,6 @@ export default function Page({token}){
                 <Button name={"Update"} onClick={updateOnClick}  />
             </div>
         </div>
-
-</div>)
+        
+    </div>)
 }
