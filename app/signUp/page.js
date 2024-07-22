@@ -21,7 +21,7 @@ export default function Page(){
                 const data = await axios.post('http://localhost:5000/api/user/data/signUp',{email,password},{
                     withCredentials:true
                 })
-                console.log("asdds::"+data.request);
+                // console.log("asdds::"+data.request);
                 if(data?.status === 201){
                     router.push("/user")            
                 }
