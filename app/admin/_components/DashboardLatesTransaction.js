@@ -14,6 +14,18 @@ export default function DashboardLatesTransaction (){
         setUserData(data)
     }
 
+    async function getOrderName(){
+        const {data} = await axios.get(`http://localhost:5000/api/dashboard/data/transaction/orderName`)
+        console.log(data)
+        setUserData(data)
+    }
+
+    async function getOrderEmail(){
+        const {data} = await axios.get(`http://localhost:5000/api/dashboard/data/transaction/orderEmail`)
+        console.log(data)
+        setUserData(data)
+    }
+
     async function filterLastTransaction(e){
         setValue(e.target.value);
     }
@@ -22,10 +34,15 @@ export default function DashboardLatesTransaction (){
         getAllData()
     },[value,maxElement])
 
-    return(<div className="flex flex-col mt-5 rounded-xl bg-slate-400 p-3">
+    return(<div className="flex flex-col mt-5 rounded-xl bg-slate-400 gap-3 p-3">
         
-        <div className="flex justify-between" >
-            <p className="text-white font-bold" >Lates Transaction</p>
+        <div className="flex flex-col md:flex-row justify-between " >
+                <p className="text-white font-bold" >Lates Transaction</p>
+            <div className="flex md:flex-row flex-col gap-3 mt-5 md:mt-0">
+                <p onClick={() => getOrderEmail()} className="text-white font-bold border-b-2 border-slate-400  hover:border-white cursor-pointer" >Order Email</p>
+                <p onClick={() => getOrderName()} className="text-white font-bold border-b-2 border-slate-400  hover:border-white cursor-pointer" >Order Name</p>
+                
+            </div>
             <select
             className="bg-slate-400 border-2 text-white"
             value={value}

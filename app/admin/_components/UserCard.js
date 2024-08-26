@@ -6,9 +6,9 @@ import Image from "next/image"
 export default function UserCard({user}){
     
     return(
-        <div className="flex justify-between bg-slate-400 text-white px-1 gap-5 py-2 rounded-xl">
-            <div className="flex justify-between items-center w-full w-6/7 mr-5 gap-4 ">
-                <div className="flex items-center ps-3 gap-3">
+        <div className="flex flex-col md:flex-row justify-center items-center md:justify-between bg-slate-400 text-white px-1 gap-5 py-2 rounded-xl">
+            <div className="grid grid-rows-3 md:grid-rows-1 md:grid-cols-3 md:justify-between items-center w-full gap-4 ">
+                <div className="flex justify-center md:justify-start items-center ps-3 gap-3">
                     <Image width={60} height={60} className="rounded-full" src={user.image ? user.image : NotImage} alt="" />
                     <div className="flex gap-1" >
                     <p>{user.name + ""}</p>
@@ -16,10 +16,10 @@ export default function UserCard({user}){
                     </div>
                 </div>
                 
-                <p>{user.email}</p>
-                <p>{user.password}</p>
+                <p className="text-center" >{user.email}</p>
+                <p className="text-center">{user.password}</p>
             </div>
-            <div className="flex items-center justify-center gap-3 w-1/7 mr-8">
+            <div className="flex items-center justify-center gap-3 md:w-1/7 md:mr-8">
                 <ViewButton id={`/users/${user._id}`} />
                 <DeleteButton id={user._id} />
             </div>

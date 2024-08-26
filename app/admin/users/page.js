@@ -27,7 +27,51 @@ export default function Users(){
 
     }
 
+    async function orderEmail(){
+        console.log("Email Sıralama işlemi...");
+        try{
+            const {data} = await axios.get(`http://localhost:5000/api/admin/data/length`)
+            setOldUserLengt(data.length)
+            if(page >= 1 ){
+                if(searchUser.trim() === "" ){
+                    const {data} = await axios.get(`http://localhost:5000/api/admin/data/emailOrder/${page}`)
+                    setAllUser(data)
+                    //console.log(data.length);
+                    if(data.length === 0){
+                        setPage(page - 1)
+                    }
+                }
+            }
+        }catch(e){
+            console.log("HATA");
+            throw new Error(e);
+        }
+    }
+
+    async function orderName(){
+        console.log("Ad a göre Sıralama işlemi...");
+        try{
+            const {data} = await axios.get(`http://localhost:5000/api/admin/data/length`)
+            setOldUserLengt(data.length)
+            if(page >= 1 ){
+                if(searchUser.trim() === "" ){
+                    const {data} = await axios.get(`http://localhost:5000/api/admin/data/nameOrder/${page}`)
+                    setAllUser(data)
+                    //console.log(data.length);
+                    if(data.length === 0){
+                        setPage(page - 1)
+                    }
+                }
+            }
+        }catch(e){
+            console.log("HATA");
+            throw new Error(e);
+        }
+    }
+
     async function getAllUsers(){
+        console.log("Kullanıcı verileri..");
+        
         //Yüklenme işlemini izlemek için konuldu
         // await new Promise((resolve) => setTimeout(resolve, 2000));
         // console.log("Arama işlemi c :"+searchUser.length);
@@ -52,37 +96,45 @@ export default function Users(){
      
     useEffect(() => {
         getAllUsers()
-    },[allUser,page])
+    },[page])
     
     return(
-            <div className="mt-5 ml-10">
+            <div className="mt-5 ml-10 mb-10 mr-10 h-full ">
+            <div className="md:h-[81%]">
             {
                 dialogOpen && <Dialog viewControl={dialogOpen}/> 
             }
-            <div className="flex justify-between items-center gap-4 text-white">
-                <form className="flex gap-5">
+            <div className="grid grid-rows-2 md:grid-cols-2 md:grid-rows-1 md:justify-between items-center gap-4 text-white ml-6 mr-6">
+                <form className="flex flex-col md:flex-row  gap-5">
                     {/* veriler bir karakter geriden geliyor */}
                     <input value={searchUser} onChange={(event) => {
                         setSearchUser(event.target.value)
                         // searchUserHandleClick(event)
                         // console.log(event.target.value);
                         searchInput(event)
-                        }} type="text" className="text-gray-500 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" placeholder="Serach" />
+                        }} type="text" className="text-gray-500 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" placeholder="Searach" />
                     {/* <Button onClick={(event) => searchUserHandleClick(event)} name={`Search`} /> */}
                     <Button name={"Refresh"} />
                 </form>
-                <Button name={`New User`} onClick={newUserHandleClick}/>
+                
+                <div className="grid grid-cols-1 md:flex md:justify-end w-full">
+                    <Button name={`New User`} onClick={newUserHandleClick}/>
+                </div>
                 
             </div>
-            <div className="flex flex-col gap-3 mt-5 mx-5">
-                <p className="text-slate-400 text-sm" >users list</p>
+
+            <div className="flex flex-col gap-3 md:mt-5 md:mx-5 ">
+                <div className="grid grid-cols-2 md:grid-cols-4  justify-between md:ms-20">
+                    <p onClick={(e) => orderName()} className="text-slate-400 text-sm cursor-pointer hover:text-slate-500 duration-300 "> order-name</p>
+                    <p onClick={(e) => orderEmail()} className="text-slate-400 text-sm cursor-pointer hover:text-slate-500 duration-300 "> order-email</p>
+                </div>
                 {
                     allUser.length !== 0 && allUser.map((user,index) => <UserCard key={index} user ={user}  />)
                 }
             </div>
-                
-            <div className="absolute bottom-3 left-1/2">
-                <div className="flex mt-5 justify-center text-white gap-2 ">
+            </div>
+            <div className="mt-auto">
+                <div className="flex mt-3 justify-center text-white gap-2 ">
                     { searchUser.length === 0 && (() => {
                         //console.log(page);
                         const arr = [];

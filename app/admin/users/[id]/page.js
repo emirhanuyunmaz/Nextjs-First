@@ -89,7 +89,7 @@ export default function Page (){
     },[id])
 
     return (<div className="p-10 gap-5">
-            <div className="flex items-center gap-5 p-5" >
+            <div className="flex flex-col md:flex-row items-center gap-5 p-5" >
                 {/* Resmin üzerine tıklanınca dosya seçme ekranı çıkıyor */}
                 <label htmlFor="file-upload" className="hover:cursor-pointer"  >
                     <img width={200}  height={200} className="rounded-full" src={`${userImage}`} alt="" />
@@ -102,7 +102,7 @@ export default function Page (){
                 {/* ROW - 1 */}
                 <div className="flex flex-col gap-5 ">
                     <h2>User Information</h2>
-                    <div className="flex w-8/10 gap-5 justify-center" >
+                    <div className="flex flex-col md:flex-row w-8/10 gap-5 justify-center" >
                         {/* Name - Start */}
                         <div className="flex-col w-full gap-5" >
                             <label htmlFor="">Name</label>
@@ -121,7 +121,7 @@ export default function Page (){
                 {/* ROW - 1 - END */}
 
                 {/* ROW - 2 - Start */}
-                <div className="flex w-8/10 gap-5 justify-center" >
+                <div className="flex flex-col md:flex-row w-8/10 gap-5 justify-center" >
                     {/* Gender - Start */}
                     <div className="flex-col w-full gap-20 " >
                         <label htmlFor="">Gender</label>
@@ -149,7 +149,7 @@ export default function Page (){
 
                 {/* ROW - 3 - START */}
                 <div className="flex flex-col ">
-                    <div className="flex w-8/10 gap-5 justify-center" >
+                    <div className="flex flex-col md:flex-row w-8/10 gap-5 justify-center" >
                         {/* Phone Number - Start */}
                         <div className="flex-col w-full gap-5" >
                             <label htmlFor="">Phone Number</label>
@@ -168,10 +168,10 @@ export default function Page (){
                 {/* ROW - 3 - END */}
 
             {/* ROW - 4 - START */}
-            <div className="flex flex-col mr-5">
-                    <div className="flex justify-start w-8/10 gap-5 " >
+            <div className="flex flex-col md:mr-5">
+                    <div className="flex flex-col md:flex-row justify-start md:w-8/10 md:gap-5 " >
                         {/* Password - Start */}
-                        <div className="flex-col items-start w-1/2 gap-5" >
+                        <div className="flex-col items-start md:w-1/2 md:gap-5" >
                             <label htmlFor="">Password</label>
                             <input  type="text" value={userPassword} onChange={(event) => setUserPassword(event.target.value)} className=" w-full outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
                         </div>
@@ -183,7 +183,7 @@ export default function Page (){
                     </div>
                 </div>
                 {/* ROW - 4 - END */}
-                <div>
+                <div className="flex flex-col md:flex-row">
                     <Button name={"Update"} onClick={updateOnClick} />
                 </div>
             </div>

@@ -78,7 +78,7 @@ export default function Dialog({viewControl}){
     <>
     {
         view && <>
-            <div className="pt-5 flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+            <div className="md:pt-5 pt-20 flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative flex justify-center items-center w-auto my-6 mx-auto max-w-3xl">
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
@@ -94,19 +94,19 @@ export default function Dialog({viewControl}){
                 </div>
                 {/*body*/}
                 <div className="relative p-6 w-[100%] text-center flex-auto justify-center items-center ">
-                    <div className="flex-col justify-center items-center ">
+                    <div className="flex flex-row md:flex-col justify-center items-center ">
                        <div className="">
-                          <input value={userName} onChange={(event) => setUserName(event.target.value)} placeholder="name" className="w-1/3 m-3 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
+                          <input value={userName} onChange={(event) => setUserName(event.target.value)} placeholder="name" className="w-full md:w-1/3 m-3 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
                             
-                            <input value={userSurname} onChange={(event) => setUserSurname(event.target.value)} placeholder="surname" className="w-1/3 m-3 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
+                            <input value={userSurname} onChange={(event) => setUserSurname(event.target.value)} placeholder="surname" className="w-full md:w-1/3 m-3 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
 
-                            <input value={userEmail} onChange={(event) => setUserEmail(event.target.value)}  placeholder="email" className="w-1/3 m-3 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
+                            <input value={userEmail} onChange={(event) => setUserEmail(event.target.value)}  placeholder="email" className="w-full md:w-1/3 m-3 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
 
-                            <input type="date" value={userBirthDay} onChange={(event) => setUserBirthDay(event.target.value)}  placeholder="birth day" className="w-1/3 m-3 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
+                            <input type="date" value={userBirthDay} onChange={(event) => setUserBirthDay(event.target.value)}  placeholder="birth day" className="w-full md:w-1/3 m-3 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
 
-                            <input value={userPassword} onChange={(event) => setUserPassword(event.target.value)} placeholder="password" type="password" className="w-1/3 m-3 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
+                            <input value={userPassword} onChange={(event) => setUserPassword(event.target.value)} placeholder="password" type="password" className="w-full md:w-1/3 m-3 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
 
-                            <input value={userPhoneNumber} onChange={(event) => setUserPhoneNumber(event.target.value)} placeholder="phone number" type="tel" className="w-1/3 m-3 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
+                            <input value={userPhoneNumber} onChange={(event) => setUserPhoneNumber(event.target.value)} placeholder="phone number" type="tel" className="w-full md:w-1/3 m-3 outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
                             
                             <div className="flex-col  m-3 " >
                             <label htmlFor="">Gender</label>
