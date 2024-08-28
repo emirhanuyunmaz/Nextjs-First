@@ -1,92 +1,77 @@
 "use client"
-import axios from "axios";
 import { useParams } from "next/navigation"
-import { useEffect, useState } from "react";
-import Button from "../../_components/Button";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Error from "next/error";
+import { Input } from "../../../../../components/ui/input";
+import { DatePicker } from "../../../../../components/ui/date-picker";
+import { Button } from "../../../../../components/ui/button";
+import { userListPageContext } from "../../../../../context/userListPageContext";
 
 export default function Page (){
     //ID ye göre kullanıcı çekme işlemleri.
     const {id} = useParams()
-    //console.log(id);
     
+    const contextUs = useContext(userListPageContext)
+
     const [userName , setUserName] = useState("")
     const [userSurname , setUserSurname] = useState("")
     const [userEmail , setUserEmail] = useState("")
     const [userPhoneNumber , setUserPhoneNumber] = useState("")
     const [userGender , setUserGender] = useState(0)
-    const [userBirthDay , setUserBirthDay] = useState("")
+    const [userBirthDay , setUserBirthDay] = useState(new Date())
     const [userPassword , setUserPassword] = useState("")
-    const [userImage , setUserImage] = useState("")
-    const [imageChanege  , setImageChange] = useState(true)
-
+    const [userImage , setUserImage] = useState()
+ 
     const router = useRouter()
 
-    function updateImage(){
-        console.log("Resmi güncelleme işlemi yapıldı");
-        
-        // console.log(userImage);
-        // console.log(userImage.files);
-        // console.log(userImage.files[0]);
-        if(imageChanege && userImage && userImage.files && userImage.files[0] ){
-            let reader = new FileReader();
-            reader.onload = function (e) {
-                setUserImage(e.target.result)
-                //console.log(userImage);
-            };
-            reader.readAsDataURL(userImage.files[0]);
-        }
-    }
-
-    useEffect(() => {
-        updateImage()
-    },[userImage])
-
     async function getUser(){
-        try{
-            const {data} = await axios.get(`http://localhost:5000/api/admin/data/user/${id}`)
-            //console.log(data[0].image);
-            setUserName(data[0].name)
-            setUserSurname(data[0].surname)
-            setUserEmail(data[0].email)
-            setUserPhoneNumber(data[0].phoneNumber)
-            setUserGender(data[0].gender)
-            setUserBirthDay(data[0].birthDay)
-            setUserPassword(data[0].password)
-            setUserImage(data[0].image)
-        }catch(e){
-            console.log(e);
-            //notFound()
-            throw new Error(e)
-        }
+        
+        contextUs.getUser(id,setUserName,
+            setUserSurname,
+            setUserEmail,
+            setUserPhoneNumber,
+            setUserGender,
+            setUserBirthDay,
+            setUserPassword,
+            setUserImage)
     }
     
     async function updateOnClick(){
-        // console.log(userName)
-        // console.log(userSurname)
-        // console.log(userEmail)
-        // console.log(userPhoneNumber)
-        // console.log(userGender)
-        // console.log(userBirthDay)
-        // console.log(userPassword)
-        const res = await axios.post(`http://localhost:5000/api/admin/data/user/${id}`,{
-            name:userName,
-            surname:userSurname,
-            email:userEmail,
-            phoneNumber:userPhoneNumber,
-            gender:userGender,
-            birdthDay:userBirthDay,
-            password:userPassword,
-            image:userImage
-        })
-        // console.log(res)
+        contextUs.updateOnClick(id,
+            userName,
+            userSurname,
+            userEmail,
+            userPhoneNumber,
+            userGender,
+            userBirthDay,
+            userPassword
+            ,userImage)
+        
         router.push(`/admin/users`)
+    }
+
+    async function changeImage(){
+        // updateImage()
+         
+        if( userImage && userImage.files && userImage.files[0] ){
+            console.log("REsim için gerekli işlemler");
+            
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                setUserImage(e.target.result)
+                console.log(userImage);
+            };
+            reader.readAsDataURL(userImage.files[0]);
+            // updateOnClick()
+        }
     }
 
     useEffect(() => {
         getUser()
     },[id])
+    useEffect(() => {
+        changeImage()
+    },[userImage])
 
     return (<div className="p-10 gap-5">
             <div className="flex flex-col md:flex-row items-center gap-5 p-5" >
@@ -95,8 +80,9 @@ export default function Page (){
                     <img width={200}  height={200} className="rounded-full" src={`${userImage}`} alt="" />
                 </label>
                 <input onChange={(event) => setUserImage(event.target)} accept="image/png, image/jpeg" id="file-upload" type="file" className="hidden" />
-                <Button name={"User Remove"} />
-
+                <Button onClick={() => {contextUs.deleteHandleClick(id) ; router.push("/admin/users")}} >
+                        User Remove
+                </Button>
             </div>
             <div className="flex flex-col gap-5">
                 {/* ROW - 1 */}
@@ -106,14 +92,14 @@ export default function Page (){
                         {/* Name - Start */}
                         <div className="flex-col w-full gap-5" >
                             <label htmlFor="">Name</label>
-                            <input value={userName} onChange={(event) => setUserName(event.target.value)} className=" w-full outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
+                            <Input value={userName} onChange={(event) => setUserName(event.target.value)}  />
                         </div>
                         {/* Name - End */}
 
                         {/* Surname - Start */}
                         <div className="w-full flex-col gap-5" >
                             <label>Surname</label>
-                            <input value={userSurname} onChange={((event) => setUserSurname(event.target.value) )} className="w-full outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
+                            <Input value={userSurname} onChange={((event) => setUserSurname(event.target.value) )}  />
                         </div>
                         {/* Surname - End */}
                     </div>
@@ -139,9 +125,10 @@ export default function Page (){
                     {/* Gender - End */}
 
                     {/* Birth Day - Start */}
-                    <div className="w-full flex-col gap-5" >
+                    <div className="w-full flex flex-col " >
                         <label>Date of Birth</label>
-                        <input placeholder="MM/DD/YYYY" type="date"  value={userBirthDay} onChange={(event) => setUserBirthDay(event.target.value)} className="w-full outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
+                        
+                        <DatePicker setUserDate={setUserBirthDay} userDate={userBirthDay} />
                     </div>
                     {/* Birth Day - End */}
                 </div>
@@ -153,14 +140,14 @@ export default function Page (){
                         {/* Phone Number - Start */}
                         <div className="flex-col w-full gap-5" >
                             <label htmlFor="">Phone Number</label>
-                            <input type="tel" value={userPhoneNumber} onChange={(event) => setUserPhoneNumber(event.target.value)} className=" w-full outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
+                            <Input type="tel" value={userPhoneNumber} onChange={(event) => setUserPhoneNumber(event.target.value)}  />
                         </div>
                         {/* Phone Number End */}
 
                         {/* Email - Start */}
                         <div className="w-full flex-col gap-5" >
                             <label>Email</label>
-                            <input type="email" value={userEmail} onChange={(event) => setUserEmail(event.target.value)} className="w-full outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
+                            <Input type="email" value={userEmail} onChange={(event) => setUserEmail(event.target.value)} />
                         </div>
                         {/* Email - End */}
                     </div>
@@ -173,18 +160,17 @@ export default function Page (){
                         {/* Password - Start */}
                         <div className="flex-col items-start md:w-1/2 md:gap-5" >
                             <label htmlFor="">Password</label>
-                            <input  type="text" value={userPassword} onChange={(event) => setUserPassword(event.target.value)} className=" w-full outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
+                            <Input  type="text" value={userPassword} onChange={(event) => setUserPassword(event.target.value)} />
                         </div>
                         {/* Password - End */}
-                        {/* <div className="w-full flex-col gap-5" >
-                            <label>Email</label>
-                            <input type="email" className="w-full outline-none border-2 border-gray-600 rounded-2xl px-2 py-1" />
-                        </div> */}
+                        
                     </div>
                 </div>
                 {/* ROW - 4 - END */}
                 <div className="flex flex-col md:flex-row">
-                    <Button name={"Update"} onClick={updateOnClick} />
+                    <Button onClick={updateOnClick}>
+                        Update
+                    </Button>
                 </div>
             </div>
     </div> )

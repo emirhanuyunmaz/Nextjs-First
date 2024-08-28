@@ -21,7 +21,7 @@ export default function Navbar(){
             <Link className="border-b-2 border-slate-500 hover:border-white" href={`/about`}>About</Link>
             <Link className="border-b-2 border-slate-500 hover:border-white" href={`/logaout`}>Logout</Link>
         </div>
-        <div className={`${!leftbarControl && "hidden"}`}>
+        <div className={`${!leftbarControl && "hidden"} `}>
             <Leftbar control={leftbarControl} setControl={setLeftbarControl}/>
         </div>
     </nav>)

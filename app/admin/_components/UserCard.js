@@ -11,13 +11,13 @@ export default function UserCard({user}){
                 <div className="flex justify-center md:justify-start items-center ps-3 gap-3">
                     <Image width={60} height={60} className="rounded-full" src={user.image ? user.image : NotImage} alt="" />
                     <div className="flex gap-1" >
-                    <p>{user.name + ""}</p>
-                    <p>{user.surname}</p>
+                    <p className="truncate flex-1 w-full" >{user.name + ""}</p>
+                    <p className="truncate flex-1 w-full" >{user.surname}</p>
                     </div>
                 </div>
                 
-                <p className="text-center" >{user.email}</p>
-                <p className="text-center">{user.password}</p>
+                <p className="text-center truncate flex-1 w-full" >{user.email}</p>
+                <p className="text-center truncate flex-1 w-full">{user.password}</p>
             </div>
             <div className="flex items-center justify-center gap-3 md:w-1/7 md:mr-8">
                 <ViewButton id={`/users/${user._id}`} />

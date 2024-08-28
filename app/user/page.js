@@ -1,7 +1,6 @@
 'use client'
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Button from "../admin/_components/Button";
 import { useRouter } from "next/navigation";
 import Toast from "./_components/Toast";
 
@@ -103,7 +102,9 @@ export default function Page({token}){
                 <img width={200}  height={200} className="rounded-full" src={`${userImage}`} alt="" />
             </label>
             <input onChange={(event) => setUserImage(event.target)} accept="image/png, image/jpeg" id="file-upload" type="file" className="hidden" />
-            <Button name={"User Remove"} />
+            <button className="bg-slate-400 hover:bg-slate-500 px-2 py-1 rounded-xl duration-500">
+                User Remove
+            </button>
 
         </div>
         <div className="flex flex-col gap-5">
@@ -189,7 +190,9 @@ export default function Page({token}){
             {/* ROW - 4 - END */}
 
             <div>
-                <Button name={"Update"} onClick={updateOnClick}  />
+                <button className="bg-slate-400 hover:bg-slate-500 px-2 py-1 rounded-xl duration-500" onClick={updateOnClick}>
+                    Update
+                </button>
             </div>
         </div>
         

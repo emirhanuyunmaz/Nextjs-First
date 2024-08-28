@@ -40,7 +40,7 @@ export default function Page(){
     return (<div className="flex flex-col gap-20 w-[100%] h-[92.4vh] justify-center items-center bg-slate-400 text-white">
         <h1 className="text-5xl" >Sign Up</h1>
         <form className="flex flex-col w-1/4 gap-5" action="">
-            <input  value={email} onChange={(e) => setEmail(e.target.value)} type="email" className="outline-none px-2 py-1 rounded-2xl bg-slate-500 text-white" placeholder="Name" />
+            <input  value={email} onChange={(e) => setEmail(e.target.value)} type="email" className="outline-none px-2 py-1 rounded-2xl bg-slate-500 text-white" placeholder="Email" />
             <input  value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" className="outline-none px-2 py-1 rounded-2xl bg-slate-500 text-white" />
             <button  onClick={(event)=>signUpOnClick(event)} className="bg-slate-500 mx-auto px-8 py-1 rounded-3xl hover:bg-slate-600 duration-300" >Sign In</button>
         </form>

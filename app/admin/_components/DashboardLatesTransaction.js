@@ -1,9 +1,19 @@
 'use client'
 import axios from "axios"
 import { useEffect, useState } from "react";
-import UserTransactionCard from "./UserTransactionCard";
+import { DataTableDashboard } from "../../../components/ui/data-table-dashboard";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+  } from "../../../components/ui/select"
 
 export default function DashboardLatesTransaction (){
+
+    //Redux eklenecek
+
     const [userData,setUserData] = useState([])
     const [value, setValue] = useState("All")
     const [maxElement,setMaxElement] = useState(8)
@@ -34,48 +44,23 @@ export default function DashboardLatesTransaction (){
         getAllData()
     },[value,maxElement])
 
-    return(<div className="flex flex-col mt-5 rounded-xl bg-slate-400 gap-3 p-3">
+    return(<div className="flex flex-col mt-5 rounded-xl gap-3 p-3">
         
-        <div className="flex flex-col md:flex-row justify-between " >
-                <p className="text-white font-bold" >Lates Transaction</p>
-            <div className="flex md:flex-row flex-col gap-3 mt-5 md:mt-0">
-                <p onClick={() => getOrderEmail()} className="text-white font-bold border-b-2 border-slate-400  hover:border-white cursor-pointer" >Order Email</p>
-                <p onClick={() => getOrderName()} className="text-white font-bold border-b-2 border-slate-400  hover:border-white cursor-pointer" >Order Name</p>
-                
-            </div>
-            <select
-            className="bg-slate-400 border-2 text-white"
-            value={value}
-            onChange={(e) => {
-                filterLastTransaction(e)
-            }}>
-                <option value="All">All</option>
-                <option value="Deleted">Deleted</option>
-                <option value="Register">Register</option>
-            </select>
+        <div className="flex  md:w-1/6 ms-auto" >
+                <Select onValueChange={setValue} >
+                    <SelectTrigger className="">
+                        <SelectValue placeholder="All" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="All">All</SelectItem>
+                        <SelectItem value="Deleted">Deleted</SelectItem>
+                        <SelectItem value="Register">Register</SelectItem>
+                    </SelectContent>
+                </Select>
+            
         </div>
         {
-            userData.slice(0,maxElement).map((item,index) => <UserTransactionCard key={index} transactionUser={item} />)
+            <DataTableDashboard data={userData} />
         }
-        {
-            userData.length > 8 && <div className="flex justify-center" >
-                {   !fullData &&
-                    <button onClick={() => {
-                        setFullData(true)
-                        setMaxElement(userData.length)
-                    }} className="text-white" >All v</button>
-                }
-
-                {
-                    fullData &&
-                    <button onClick={() => {
-                        setMaxElement(8)
-                        setFullData(false)
-                    }} className="text-white" >Less ^</button>
-                }
-
-            </div>
-        }
-
     </div>)
 }

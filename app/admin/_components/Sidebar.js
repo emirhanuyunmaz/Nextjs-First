@@ -1,4 +1,5 @@
-import AdminLink from "./AdminLink";
+import Link from "next/link";
+
 
 
 export default function Sidebar(){
@@ -10,9 +11,9 @@ export default function Sidebar(){
     
     <div className="flex flex-col gap-3 mt-4">
         <h3 className=" text-sm">Pages</h3>
-        <AdminLink path={"/admin/dashboard"} name={"Dashboard"} />
-        <AdminLink path={"/admin/users"} name={"Users"} />
-        <AdminLink path={"/admin/products"} name={"Products"} />
+        <Link className="block bg-slate-400 px-2 py-1 rounded-xl text-white hover:bg-slate-500 duration-500"  href={"/admin/dashboard"}  >Dashboard</Link>
+        <Link className="block bg-slate-400 px-2 py-1 rounded-xl text-white hover:bg-slate-500 duration-500"  href={"/admin/users"}  >Users</Link>
+        <Link className="block bg-slate-400 px-2 py-1 rounded-xl text-white hover:bg-slate-500 duration-500"  href={"/admin/products"}  >Products</Link>
     </div>
     </div>)
 }
