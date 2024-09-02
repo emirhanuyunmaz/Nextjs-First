@@ -62,6 +62,21 @@ export const columns = [
     enableHiding: false,
   },
   {
+    accessorKey: "personId",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          person id
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+    cell: ({ row }) => <div className="lowercase">{row.getValue("personId")}</div>,
+  },
+  {
     accessorKey: "name",
     header: ({ column }) => {
       return (
@@ -77,37 +92,22 @@ export const columns = [
     cell: ({ row }) => <div className="lowercase">{row.getValue("name")}</div>,
   },
   {
-    accessorKey: "surname",
+    accessorKey: "price",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          surname
+          price
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("surname")}</div>,
+    cell: ({ row }) => <div className="lowercase">{row.getValue("price")}</div>,
   },
   {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
-  },
-  {
-    accessorKey: "password",
+    accessorKey: "amount",
     header: ({ column }) => {
       return (
         <Button
@@ -115,12 +115,12 @@ export const columns = [
           className="text-right"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Password
+          amount
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
     },
-    cell: ({ row }) => <div className="">{row.getValue("password")}</div>,
+    cell: ({ row }) => <div className="">{row.getValue("amount")}</div>,
   },
   {
     id: "actions",
@@ -139,7 +139,7 @@ export const columns = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <Link href={`/admin/users/detail/${row.original._id}`} >
+            <Link href={`/admin/products/${row.original._id}`} >
             <DropdownMenuItem>
              Detail
             </DropdownMenuItem>
@@ -167,6 +167,9 @@ export function DataTableProduct({data}) {
   const [columnVisibility, setColumnVisibility] =React.useState({})
   const [rowSelection, setRowSelection] = React.useState({})
 
+  console.log("Product Data:",data);
+  
+
   const table = useReactTable({
     data,
     columns,
@@ -189,14 +192,14 @@ export function DataTableProduct({data}) {
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue()) ?? ""}
+        {/* <Input
+          placeholder="Filter name..."
+          value={(table.getColumn("name")?.getFilterValue()) ?? ""}
           onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
+            table.getColumn("name")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
-        />
+        /> */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">

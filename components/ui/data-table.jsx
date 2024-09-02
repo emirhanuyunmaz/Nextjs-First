@@ -189,14 +189,14 @@ export function DataTable({data}) {
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
-        <Input
+        {/* <Input
           placeholder="Filter emails..."
           value={(table.getColumn("email")?.getFilterValue()) ?? ""}
           onChange={(event) =>
             table.getColumn("email")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
-        />
+        /> */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">

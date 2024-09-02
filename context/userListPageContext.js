@@ -14,17 +14,30 @@ export function UserListPageContextProvider({children}){
         setUserListLength(userListLength)
     }
 
+    
+    async function UserListLength() {
+        const length = await axios.get(`http://localhost:5000/api/admin/data/length`)
+        // console.log(length.data.length)
+        setUserListLength(length.data.length)
+    }
+
     async function UserList(page){
         const getUserList = await axios.get(`http://localhost:5000/api/admin/data/${page}`)
         // console.log("CONTEXT::",getUserList);
         setUserList(getUserList.data)
         setOldPage(page)
+        await UserListLength()
     }
 
-    async function UserListLength() {
-        const length = await axios.get(`http://localhost:5000/api/admin/data/length`)
-        // console.log(length.data.length)
-        setUserListLength(length.data.length)
+    async function searchData(search,page){
+        if(search === ""){
+            UserList(page)
+        }else{
+            const data = await axios.get(`http://localhost:5000/api/admin/data/allData/${search}`)
+            console.log(data.data.length);
+            setUserList(data.data)
+            setUserListLength(data.data.length)
+        }
     }
 
     async function getUser(id,setUserName,
@@ -114,7 +127,7 @@ export function UserListPageContextProvider({children}){
         UserListLength()
     },[])
 
-    return(<userListPageContext.Provider value={{userList,userListLength,setUserListLength,UserList,UserListLength,deleteHandleClick,addNewUser,updateOnClick,getUser,userListLengthAdd}}>
+    return(<userListPageContext.Provider value={{userList,userListLength,setUserListLength,UserList,UserListLength,deleteHandleClick,addNewUser,updateOnClick,getUser,userListLengthAdd,searchData}}>
         {children}
     </userListPageContext.Provider>)
 
