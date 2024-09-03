@@ -70,17 +70,12 @@ export default function Page(){
         setProductLength(dataLength.data.length)
     }
 
-    
     useEffect(() => {
         allDataLength()
         getAllProduct()
         searchProduct()
     },[page])
 
-    useEffect(() => {
-
-    },[])
-    
     useEffect(() => {
         // console.log("Arama işlemi:",searchProductUrl )
         searchProduct()

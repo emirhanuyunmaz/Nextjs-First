@@ -16,8 +16,8 @@ export default function Page(){
     const [ images , setImages ] = useState([])
     const [ name , setName ] = useState("")
     const [ price , setPrice ] = useState("")
-    const [amount,setAmount] = useState("")
-    const [personId,setPersonId] = useState("")
+    const [amount , setAmount] = useState("")
+    const [personId , setPersonId] = useState("")
     const [imagesList , setImagesList] = useState([])
 
     //Çoklu foto çekme ve listeleme işlemi...
@@ -41,14 +41,13 @@ export default function Page(){
 
 
     async function updateProductHandleClick(){
-        // const res = await axios.post("http://localhost:5000/api/product/newProduct",{
-        //     images:images,
-        //     name:name,
-        //     price:price,
-        //     amount:amount,
-        //     personId:personId
-        // })
-        // console.log(res)
+        const res = await axios.post(`http://localhost:5000/api/product/updateProduct/${id}`,{
+            name:name,
+            price:price,
+            amount:amount,
+            personId:personId
+        })
+        
     }
 
     async function deleteProduct(){
@@ -59,7 +58,6 @@ export default function Page(){
     async function deleteSingleImage(imageLink){
         const res = await axios.delete(`${imageLink}`)
         getSingleProduct()
-        // router.refresh()
     }
     
 
@@ -79,6 +77,7 @@ export default function Page(){
         </div>
 
         <div className="flex flex-wrap w-full">
+            {/*Çoklu Resim ekleme işlemi.  */}
         <ReactImageUploading
             multiple
             value={images}

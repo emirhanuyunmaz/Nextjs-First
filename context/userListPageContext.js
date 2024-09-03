@@ -1,7 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 
-
 export const userListPageContext = createContext()
 
 export function UserListPageContextProvider({children}){
@@ -14,7 +13,6 @@ export function UserListPageContextProvider({children}){
         setUserListLength(userListLength)
     }
 
-    
     async function UserListLength() {
         const length = await axios.get(`http://localhost:5000/api/admin/data/length`)
         // console.log(length.data.length)
@@ -22,11 +20,21 @@ export function UserListPageContextProvider({children}){
     }
 
     async function UserList(page){
-        const getUserList = await axios.get(`http://localhost:5000/api/admin/data/${page}`)
-        // console.log("CONTEXT::",getUserList);
-        setUserList(getUserList.data)
-        setOldPage(page)
-        await UserListLength()
+        console.log("PAGE:",page);
+        
+        if(page === null){
+            const getUserList = await axios.get(`http://localhost:5000/api/admin/data/${1}`)
+            //console.log("CONTEXT::",getUserList);
+            setUserList(getUserList.data)
+            setOldPage(page)
+            await UserListLength()
+        }else{
+            const getUserList = await axios.get(`http://localhost:5000/api/admin/data/${page}`)
+            // console.log("CONTEXT::",getUserList);
+            setUserList(getUserList.data)
+            setOldPage(page)
+            await UserListLength()
+        }
     }
 
     async function searchData(search,page){

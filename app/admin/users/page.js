@@ -14,9 +14,9 @@ import { Input } from "../../../components/ui/input";
 
 export default function Users(){
     const [search, setSearch] = useState("");
-
     const searchParams = useSearchParams()
     const searchPage = searchParams.get('p')
+    const [page,setPage ] = useState(1)
     
     const router = useRouter()
     
@@ -27,10 +27,13 @@ export default function Users(){
     }
     
     function pageChange(page){
+        setPage(page)
         router.push(`http://localhost:3000/admin/users?p=${page}`)
     }
 
-    
+    // useEffect(() => {
+    //     router.push(`http://localhost:3000/admin/users?p=${page}`)
+    // },[page])
 
     useEffect(() => {
         contextL.UserList(searchPage ? searchPage : 1)
@@ -77,7 +80,7 @@ export default function Users(){
                         for (let i = 1; i <= (contextL.userListLength/6); i++) {
                             arr.push(
                                 <PaginationItem  key={i} >
-                                <PaginationLink isActive={i == searchPage } onClick={() => {pageChange(i)}}>{i}</PaginationLink>
+                                <PaginationLink isActive={i == searchPage } onClick={() => {setPage(i);pageChange(i)}}>{i}</PaginationLink>
                                 </PaginationItem>
                             );
                         }
